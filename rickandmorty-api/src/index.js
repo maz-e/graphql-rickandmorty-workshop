@@ -1,5 +1,5 @@
-const fetch = require("node-fetch");
-const { ApolloServer, gql } = require("apollo-server");
+const fetch = require("node-fetch")
+const { ApolloServer, gql } = require("apollo-server")
 
 // This is a (sample) collection of books we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
@@ -13,7 +13,7 @@ const books = [
     title: "Jurassic Park",
     author: "Michael Crichton"
   }
-];
+]
 
 // Type definitions define the "shape" of your data and specify
 // which ways the data can be fetched from the GraphQL server.
@@ -26,31 +26,46 @@ const typeDefs = gql`
     author: String
   }
 
+  enum CharacterStatus {
+    Alive
+    Dead
+    unknown
+  }
+
+  type Character {
+    id: ID
+    name: String
+    status: CharacterStatus
+    episodes: [String]
+  }
+
   # The "Query" type is the root of all GraphQL queries.
   # (A "Mutation" type will be covered later on.)
   type Query {
     books: [Book]
+    characters: [Character]
   }
-`;
+`
 
 // Resolvers define the technique for fetching the types in the
 // schema.  We'll retrieve books from the "books" array above.
 const resolvers = {
   Query: {
-    books: () => books
+    books: () => books,
+    characters: () => characters
   }
-};
+}
 
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers
 // responsible for fetching the data for those types.
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers })
 
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
 server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  console.log(`🚀  Server ready at ${url}`)
+})
 
 // mock data for characters
 const characters = [
@@ -72,7 +87,7 @@ const characters = [
       "https://rickandmortyapi.com/api/episode/3"
     ]
   }
-];
+]
 
 // mock data for episodes
 const episodes = [
@@ -84,44 +99,44 @@ const episodes = [
     name: "Lawnmower Dog",
     id: 2
   }
-];
+]
 
 function fetchEpisodes() {
   // More info about the fetch function? https://github.com/bitinn/node-fetch#json
   return fetch("https://rickandmortyapi.com/api/episode/")
     .then(res => res.json())
-    .then(json => json.results);
+    .then(json => json.results)
 }
 
 function fetchEpisodeById(id) {
   return fetch("https://rickandmortyapi.com/api/episode/" + id)
     .then(res => res.json())
-    .then(json => json);
+    .then(json => json)
 }
 
 function fetchEpisodeByUrl(url) {
   return fetch(url)
     .then(res => res.json())
-    .then(json => json);
+    .then(json => json)
 }
 
 function fetchCharacters() {
   // More info about the fetch function? https://github.com/bitinn/node-fetch#json
   return fetch("https://rickandmortyapi.com/api/character/")
     .then(res => res.json())
-    .then(json => json.results);
+    .then(json => json.results)
 }
 
 function fetchCharacterById(id) {
   // More info about the fetch function? https://github.com/bitinn/node-fetch#json
   return fetch("https://rickandmortyapi.com/api/character/" + id)
     .then(res => res.json())
-    .then(json => json);
+    .then(json => json)
 }
 
 function fetchCharacterByUrl(url) {
   // More info about the fetch function? https://github.com/bitinn/node-fetch#json
   return fetch(url)
     .then(res => res.json())
-    .then(json => json);
+    .then(json => json) 
 }
