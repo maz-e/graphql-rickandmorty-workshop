@@ -4,7 +4,9 @@ import CharactersQuery from './CharactersQuery'
 function App() {
   return (
     <div className="App">
-      <CharactersQuery />
+      <ul>
+        <CharactersQuery />
+      </ul>
     </div>
   )
 }

@@ -6,12 +6,10 @@ function CharactersQuery() {
     return <Query query={
         gql`{
             characters {
-                results {
-                    id
-                    name
-                    status
-                    image
-                }
+                id
+                name
+                status
+                image
             }
         }`
     }>
@@ -19,10 +17,11 @@ function CharactersQuery() {
             if (loading) return <p>Loading...</p>
             if (error) return <p>Error!</p>
 
-            const {characters: { results } } = data
-            debugger
-            return results.map(character => {
-                return <p>{character.name}</p>
+            const { characters } = data
+            return characters.map(character => {
+                return <li key={character.id}>
+                    <p>{character.name}</p>
+                </li>
             })
         }}
     </Query>

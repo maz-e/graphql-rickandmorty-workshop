@@ -8,7 +8,8 @@ import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 
 const client = new ApolloClient( {
-    uri: 'https://rickandmortyapi.com/graphql/'
+    // uri: 'https://rickandmortyapi.com/graphql/'
+    uri: 'http://localhost:4000/'
 })
 
 ReactDOM.render(
